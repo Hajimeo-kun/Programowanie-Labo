@@ -1,0 +1,152 @@
+#include "stdio.h"
+#include <string>
+using namespace std;
+
+int dayNumber(int day, int month, int year)
+{
+	static int t[] = { 0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4 };
+	year -= month < 3;
+	int nday = (year + year / 4 - year / 100 + year / 400 + t[month - 1] + day) % 7;
+	if (nday == 0) nday = 8;
+
+	nday = nday - 1;
+	if (nday == 7) nday = 6; //konfiguracja algorytmu aby tydzień zaczynał się od poniedziałku
+
+	return nday;
+	//Algorytm Sakamoto służący do określenia numeru dnia tygodnia (https://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week#Other_algorithms)
+}
+
+//-----------------------------------//
+std::string getMonthName(int monthNumber)
+{
+	std::string months[12] = { "Styczen", "Luty", "Marzec", "Kwiecien", "Maj", "Czerwiec", "Lipiec", "Sierpien", "Wrzesien", "Pazdziernik", "Listopad", "Grudzien" };
+	return (months[monthNumber]);
+	//Utworzenie tablicy z nazwami miesięcy
+}
+
+int numberOfDays(int monthNumber, int year)
+{
+	if (monthNumber == 0 || monthNumber == 2 || monthNumber == 4 || monthNumber == 6 || monthNumber == 7 || monthNumber == 9 || monthNumber == 11)
+		return (31);
+	if (monthNumber == 1)
+	{
+		if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0))
+			return (29);
+		else
+			return (28);
+	}
+
+	if (monthNumber == 3 || monthNumber == 5 || monthNumber == 8 || monthNumber == 10)
+		return (30);
+	//określa ilość dni dla danego miesiąca
+}
+void printDOW(int day, int month, int year)
+{
+	printf("\n%02d-%02d-%04d to ", day, month, year);
+	int nday = dayNumber(day, month, year);
+
+	if (nday == 0)
+		printf("poniedzialek");
+	if (nday == 1)
+		printf("wtorek");
+	if (nday == 2)
+		printf("sroda");
+	if (nday == 3)
+		printf("czwartek");
+	if (nday == 4)
+		printf("piatek");
+	if (nday == 5)
+		printf("sobota");
+	if (nday == 6)
+		printf("niedziela");
+}
+void is_leap(int day, int month, int year)
+{
+	if (numberOfDays(1, year) == 29)
+		printf("\n%d to rok przestepny\n", year);
+	else
+		printf("\n%d rok nie jest przestepny\n", year);
+
+	int nday = dayNumber(day, month, year);
+}
+
+void printCalendar(int day, int month, int year)
+{
+	int nday = dayNumber(day, month, year);
+
+	printf("\n\nKalendarz na miesiac - %s-%04d\n", getMonthName(month - 1).c_str(), year);
+	printf("\n ------------%s-------------\n", getMonthName(month - 1).c_str());
+	printf(" Pon Wto Sro Czw Pia Sob Nie\n");
+
+	nday = dayNumber(1, month, year); //Określa pierwszy dizeń danego miesiąca danego roku z Sakamoto
+	int ildniMC1 = numberOfDays(month - 1, year); //ilość dni w miesiącu
+	int kol = 0; //zmienna do drukowania kolumn ( od 0 do 6 )
+	int sp = 0; //przesunięcie do kolumny pierwszego dnia miesiąca
+	int dni = 1;//zmienna do zapisu dni miesiąca
+
+	for (sp = 0; sp < nday; sp++)
+	{
+		++kol;
+		printf("    ");
+	}
+	do
+	{
+		if (kol > 6)
+		{
+			kol = 0;
+			printf("\n%4d", dni);
+			++kol;
+		}
+		else
+		{
+			++kol;
+			printf("%4d", dni);
+		}
+		++dni;
+	} while (dni <= ildniMC1);
+}
+int wpisz(int typ, int ilMC)
+{
+	int wy;
+	if (typ == 1)
+	{
+		do
+		{
+			printf("Podaj rok RRRR (1970-9999):");
+			scanf_s("%4d", &wy);
+		} while (wy < 1970 or wy > 9999);
+	}
+	if (typ == 2)
+	{
+		do
+		{
+			printf("Podaj miesiac MM (1-12):");
+			scanf_s("%2d", &wy);
+		} while (wy < 1 or wy > 12);
+	}
+	if (typ == 3)
+	{
+		do
+		{
+			printf("Podaj dzien DD (1 - %d) :", ilMC);
+			scanf_s("%2d", &wy);
+		} while (wy < 1 or wy > ilMC);
+	}
+	return wy;
+}
+
+int main()
+{
+	int DD = 0;
+	int MM = 0;
+	int RR = 0;
+	RR = wpisz(1, 0);
+	MM = wpisz(2, 0);
+	int	ildniMC = numberOfDays(MM - 1, RR);
+	DD = wpisz(3, ildniMC);
+	printDOW(DD, MM, RR);
+	is_leap(DD, MM, RR);
+	printCalendar(DD, MM, RR);
+
+	return (0);
+}
