@@ -1,0 +1,103 @@
+#include "pch.h"
+#include "stdio.h"
+#include "math.h"
+
+double sub(double a, double b)
+{
+	double wyn = a - b;	
+	return wyn;
+
+
+}
+double add(double a, double b)
+{
+	double wyn = a + b;
+	return wyn;
+}
+double  mul(double a, double b)
+{
+	double wyn = a * b;
+	return wyn;
+}
+double div(double a, double b)
+{
+	double wyn = a / b;
+	return wyn;
+}
+
+
+void test_add(void)
+{
+	printf("\n Test Dodawania \n\n");
+	printf(" Test 1: \n\t Oczekiwano : 84 , \n\t a uzyskano : %g\n", add(80, 4));
+	printf(" Test 2: \n\t Oczekiwano : 0.055 , \n\t a uzyskano : %g\n", add(0.01, 0.045));
+	printf(" Test 3: \n\t Oczekiwano : 13.23 , \n\t a uzyskano : %g\n", add(0, 13.23));
+	printf(" Test 4: \n\t Oczekiwano : 11.03 , \n\t a uzyskano : %g\n", add(6.25, 4.78));
+	printf(" Test 5: \n\t Oczekiwano : 4.0003 , \n\t a uzyskano : %g\n", add(0.0003, 4));
+	printf(" Test 6: \n\t Oczekiwano : 0.000000001 , \n\t a uzyskano : %g\n", add(0.000000001, 0.0));
+}
+void test_sub(void)
+{
+	printf("\n Test Odejmowania \n\n");
+	printf(" Test 1: \n\t Oczekiwano : 1 , \n\t a uzyskano : %g\n", sub(6.0, 5.0));
+	printf(" Test 2: \n\t Oczekiwano : -0.035 , \n\t a uzyskano : %g\n", sub(0.01, 0.045));
+	printf(" Test 3: \n\t Oczekiwano : -13.23 , \n\t a uzyskano : %g\n", sub(0, 13.23));
+	printf(" Test 4: \n\t Oczekiwano : 1.53 , \n\t a uzyskano : %g\n", sub(6.25, 4.78));
+	printf(" Test 5: \n\t Oczekiwano : 3.9997 , \n\t a uzyskano : %g\n", sub(0.0003, 4));
+	printf(" Test 6: \n\t Oczekiwano : 0.000000001 , \n\t a uzyskano : %g\n", sub(0.000000001, 0.0));
+
+}
+void test_mul(void)
+{
+	printf("\n Test Multiplikacji \n\n");
+	printf(" Test 1: \n\t Oczekiwano : 30 , \n\t a uzyskano : %g\n", mul(6.0, 5.0));
+	printf(" Test 2: \n\t Oczekiwano : 0.00045 , \n\t a uzyskano : %g\n", mul(0.01, 0.045));
+	printf(" Test 3: \n\t Oczekiwano : 0 , \n\t a uzyskano : %g\n", mul(0, 13.23));
+	printf(" Test 4: \n\t Oczekiwano : 29,875 , \n\t a uzyskano : %g\n",mul(6.25, 4.78));
+	printf(" Test 5: \n\t Oczekiwano : 0.0012 , \n\t a uzyskano : %g\n", mul(0.0003, 4));
+	printf(" Test 6: \n\t Oczekiwano : 0.000000001 , \n\t a uzyskano : %g\n", mul(0.000001, 0.001));
+}
+void test_div(void)
+{
+	printf("\n Test Dzielenia \n\n");
+	printf(" Test 1: \n\t Oczekiwano : 1.2 , \n\t a uzyskano : %g\n", div(6.0, 5.0));
+	printf(" Test 2: \n\t Oczekiwano : 0.(222) , \n\t a uzyskano : %g\n", div(0.01, 0.045));
+	printf(" Test 3: \n\t Oczekiwano : 0 , \n\t a uzyskano : %g\n", div(0, 13.23));
+	printf(" Test 4: \n\t Oczekiwano : 1.3075(313085) , \n\t a uzyskano : %g\n", div(6.25, 4.78));
+	printf(" Test 5: \n\t Oczekiwano : inf , \n\t a uzyskano : %g\n", div(2, 0));
+	printf(" Test 6: \n\t Oczekiwano : 0.001 , \n\t a uzyskano : %g\n",div(0.000001, 0.001));
+}
+void test_sin(void)
+{
+	printf("\n Test Sinusa \n\n");
+	printf(" Test 1: \n\t Oczekiwano : -1 , \n\t a uzyskano : %g\n", sin(4.712388));
+	printf(" Test 2: \n\t Oczekiwano : 1 , \n\t a uzyskano : %g\n", sin(1.570796));
+	printf(" Test 3: \n\t Oczekiwano : 0.5 , \n\t a uzyskano : %g\n", sin(0.5235987666666667));
+	printf(" Test 3: \n\t Oczekiwano : -0.5 , \n\t a uzyskano : %g\n", sin(-0.5235987666666667));
+	printf(" Test 3: \n\t Oczekiwano : 0.841471 , \n\t a uzyskano : %g\n", sin(1));
+	printf(" Test 3: \n\t Oczekiwano : 0.752305 , \n\t a uzyskano : %g\n", sin(-66.825));
+	
+}
+void test_cos(void)
+{
+	printf("\n Test Cosinusa \n\n");
+	printf(" Test 1: \n\t Oczekiwano : -0.957659 , \n\t a uzyskano : %g\n", cos(16));
+	printf(" Test 2: \n\t Oczekiwano : 0.883892 , \n\t a uzyskano : %g\n", cos(-565));
+	printf(" Test 3: \n\t Oczekiwano : 0.849637 , \n\t a uzyskano : %g\n", cos(0.5555));
+	printf(" Test 3: \n\t Oczekiwano : -0.999999 , \n\t a uzyskano : %g\n", cos(3.14));
+	printf(" Test 3: \n\t Oczekiwano : 0.00079633 , \n\t a uzyskano : %g\n", cos(1.57));
+	printf(" Test 3: \n\t Oczekiwano : 0.987344 , \n\t a uzyskano : %g\n", cos(-314));
+
+}
+
+
+void main()
+{
+	test_add();
+	test_sub();
+	test_mul();
+	test_div();
+	test_sin();
+	test_cos();
+	
+}
