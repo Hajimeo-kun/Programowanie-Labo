@@ -1,0 +1,26 @@
+#include "pch.h"
+#include "stdio.h"
+
+void his(int t[],int j)
+{		
+	for (int i = 0; i < 5; i++)
+	{
+		j++;
+	
+		
+		for (int z = 0; z < t[j]; z++) 
+		if (t[j]>=z)
+		{
+			printf("#");
+		}
+		else if (t[j] < z)
+		{
+			printf(" ");
+		}
+	}
+}
+int main(void)
+{
+	int z [5] = {5, 4, 8, 4, 6};
+	his(z,-1);
+}
