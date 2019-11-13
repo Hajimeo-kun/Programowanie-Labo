@@ -1,0 +1,45 @@
+\documentclass [12pt,oneside]{report}
+\usepackage [a4paper, left=3.5cm, right=2cm, bottom=2.5cm, top=3cm] {geometry}
+\usepackage [OT4, plmath] {polski}
+\usepackage [utf8] {inputenc}
+\usepackage {graphics}
+\usepackage {multicol}
+
+\begin {document}
+
+
+
+\begin{center}
+\textbf {\large Jakub Sadowski} \newline
+nr albumu: 46634\newline
+kierunek studiów: Informatyka\newline
+specjalność: Systemy komputerowe i oprogramowania\newline
+forma studiów: 
+\textsl {stacjonarne}\newline
+\vspace {1.2cm}
+\textbf {\large SPOSOBY ZNAJDOWANIA MĄDRYCH TYTUŁÓW}\newline
+
+\textbf {\large WAYS OF FINDING SMART TITLES}\newline
+\vspace {1.2cm}
+praca dyplomowa inżynierska \newline
+
+napisana pod kierunkiem:\newline
+
+\textbf {prof. dr hab. Tentin Quarantino}\newline
+
+Akademia Pranków Czitos\newline
+\end {center}
+
+\small{Data wydania tematu pracy:~~~~~~~~~~~~~~~~~30.02.2018}\newline
+
+\small {Data dopuszczenia pracy do egzaminu:……………………………}
+
+\small {(uzupełnia pisemnie Dziekanat)}\newline
+
+\begin {center}
+\begin {flushright}
+\large {Szczecin, 2019}\newline
+\end {flushright}
+\end {center}
+
+\end{document}
