@@ -1,0 +1,125 @@
+
+#include "pch.h"
+#include <stdio.h>
+#include <stdlib.h>
+#define VALUES_SIZE 10
+
+/*void foo()
+{
+	int * values;
+	values = (int *)malloc(sizeof(int) * VALUES_SIZE);
+	for (int i = 0; i < VALUES_SIZE; i++)
+		values[2] = 1; // odwolanie jak do statycznych tablic
+	
+	for (int i = 0; i < VALUES_SIZE; i++)
+		printf(" value [%d] = %d\n", i, values[i]);
+	free(values);
+}
+void main()
+{
+	foo();
+	
+}*/
+
+
+
+
+int *pobierz(int * values, int n)
+{
+	int x;
+	values = (int *)malloc(sizeof(int) * VALUES_SIZE);
+	for (int i = 0; i < VALUES_SIZE; i++)
+	{
+
+		scanf_s("%d", &x);
+		values[i] = x;
+	}
+	return values;
+	 
+
+}
+
+void druk(int * x, int n)
+{
+		
+	printf("\n");
+	for (int i = 0; i < VALUES_SIZE; i++)
+		printf(" value [%d] = %d\n", i, x[i]);
+	free(x);
+}
+/*int sum(int a[10], int n)
+{
+	int x = 0;
+
+	for (int i = 0; i < n; i++)
+	{
+
+		x += a[i];
+	}
+
+
+	return x;
+
+}
+int average(int a[10], int n)
+{
+	int wyn;
+	wyn = sum(a, n) / n;
+
+	return wyn;
+}
+int min(int a[10], int n)
+{
+	int x = 9999;
+	for (int i = 0; i < n; i++)
+	{
+		if (x > a[i])
+		{
+			x = a[i];
+		}
+
+	}
+
+	return x;
+}
+int max(int a[10], int n)
+{
+	int x = 0;
+	for (int i = 0; i < n; i++)
+	{
+		if (x < a[i])
+		{
+			x = a[i];
+		}
+
+	}
+
+	return x;
+}
+int sumt(int a[10], int b[10], int n)
+{
+	int x[10];
+
+	for (int i = 0; i < n; i++)
+	{
+		x[i] = a[i] + b[i];
+
+	}
+	druk(x, 10);
+
+	return 0;
+
+}*/
+int main()
+{
+	int * Mtab;
+	Mtab = (int *)malloc(sizeof(int) * VALUES_SIZE);
+	pobierz (Mtab, VALUES_SIZE);
+	druk(Mtab, 10);
+	/*printf("\n sum of array elements = %d  ", sum(tab1, 10));
+	printf("\n average of array elements = %d", average(tab1, 10));
+	printf("\n min = %d", min(tab1, 10));
+	printf("\n max = %d", max(tab1, 10));
+	sumt(tab1, tab2, 10); */
+
+}
