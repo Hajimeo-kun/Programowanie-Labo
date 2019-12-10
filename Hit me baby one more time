@@ -1,0 +1,31 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h> 
+
+void fileWrite()
+{
+	int z;
+	int i;
+	for (i = 0; i < 10; i++)
+	{
+
+		char fileName[100];
+		sprintf_s(fileName, "test %d.txt", i);
+		FILE* outputFile;
+		fopen_s(&outputFile, fileName, "w");
+
+		for (z = 0; z < 100; z++)
+		{
+			int num = (rand() % 11);
+			fprintf_s(outputFile, "%d\n", num);
+		}
+		fclose(outputFile);
+	}
+
+}
+void main()
+{
+
+	srand(time(0));
+	fileWrite();
+}
