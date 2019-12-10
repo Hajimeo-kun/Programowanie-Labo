@@ -2,14 +2,6 @@
 #include <stdio.h>
 #include <time.h> 
 
-void losowanko()
-{
-	int i;
-	for (i = 0; i < 5; i++) {
-		int num = (rand() % 11);
-		printf("%d ", num);
-	}
-}
 void fileWrite()
 {
 	int z;
