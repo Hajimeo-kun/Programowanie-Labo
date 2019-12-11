@@ -1,0 +1,107 @@
+
+
+#include "pch.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h> 
+
+void fileWrite()
+{
+	int z;
+	int i;
+	for (i = 0; i < 10; i++)
+	{
+
+		char fileName[100];
+		sprintf_s(fileName, "test %d.txt", i);
+		FILE* outputFile;
+		fopen_s(&outputFile, fileName, "w");
+
+		for (z = 0; z < 100; z++)
+		{
+			int num = (rand() % 11);
+			fprintf_s(outputFile, "%d\n", num);
+		}
+		fclose(outputFile);
+	}
+
+}
+void fileRead()
+{
+	int i;
+	int z;
+	int x;
+	int a=0;
+	int b;
+	int t;
+
+	for (b = 0; b < 10; b++)
+	{
+		for (i = 0; i <11; i++)
+		{
+			int tab1[11] = { 0,0,0,0,0,0,0,0,0,0,0 };
+			int tab[11] = { 0,0,0,0,0,0,0,0,0,0,0 };
+			FILE* inpf;
+			char fileName[100];
+			sprintf_s(fileName, "test %d.txt", b);
+			fopen_s(&inpf, fileName, "r");
+			/*for (t = 0; t < 100; t++)
+			{
+				fscanf_s(inpf, "%d", &z);
+				fscanf_s(inpf, "\n");
+				
+			}*/
+			
+			/*sprintf_s(fileName, "results.txt");
+
+			for (y = 0; y < 11;y++)
+			{
+
+				fprintf_s(inpf, "ilość liczby %d w pliku %d\n", y, tab1[y]);
+			}
+			fopen_s(&inpf, fileName, "r");*/
+			for (x = 0; x < 100; x++)
+			{
+				fscanf_s(inpf, "%d", &z);
+				fscanf_s(inpf, "\n");
+				tab[z]++;
+				if (z == i)
+				{
+					a++;
+
+				}
+				else if (z != i)
+				{
+					if (a > tab1[i])
+					{
+						tab1[i] = a;
+						a = 0;
+
+					}
+					else if (a <= tab1[i])
+					{
+
+						a = 0;
+					}
+
+				}
+				
+			}
+			sprintf_s(fileName, "results.txt");
+			fopen_s(&inpf, fileName, "w");
+			fprintf_s(inpf, "%d\n", tab[i]);
+			printf("number of %d in file %d = %d\n", i, b, tab[i]);
+			printf("number of %d in a row  in file %d = %d\n", i, b, tab1[i]);
+			fclose(inpf);
+			
+
+		}
+	}
+}
+int main()
+{
+
+	srand(time(0));
+	fileWrite();
+	fileRead();
+}
