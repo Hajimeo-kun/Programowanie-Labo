@@ -29,13 +29,13 @@ void resto(int c, int a[11], int d)
 	if (c == 0 && d == 0)
 	{
 		fopen_s(&resu, fileName, "w");
-		fprintf_s(resu, "file %d: number of %d's in total  = %d\n", c, d, a[d]);
+		fprintf_s(resu, "file %d: number of %2d's in total  = %d\n", c, d, a[d]);
 		fclose(resu);
 	}
 	else if (c >= 0 && d >= 0)
 	{
 		fopen_s(&resu, fileName, "a");
-		fprintf_s(resu, "file %d: number of %d's in total = %d\n", c, d, a[d]);
+		fprintf_s(resu, "file %d: number of %2d's in total = %d\n", c, d, a[d]);
 		fclose(resu);
 	}
 }
@@ -48,7 +48,7 @@ void resro(int c, int b[11])
 	fopen_s(&resu, fileName, "a");
 	for (t = 0; t < 11; t++)
 	{
-		fprintf_s(resu, "file %d: number of %d in a row = %d\n",c, t, b[t]);
+		fprintf_s(resu, "file %d: number of %2d in a row = %d\n",c, t, b[t]);
 	}
 
 	fclose(resu);
