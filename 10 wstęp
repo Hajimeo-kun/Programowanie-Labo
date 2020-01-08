@@ -1,0 +1,16 @@
+#include "pch.h"
+#include <iostream>
+#include "string.h"
+struct data
+{
+	char name[100];
+	int phone;
+	
+};
+int main()
+{
+	struct data o1;
+	gets_s("%s", o1.name);
+	o1.phone = 997825456;
+	printf("%s\n", o1.name );
+}
