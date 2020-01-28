@@ -1,0 +1,183 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct cell
+{
+	struct cell* left_cell;
+	struct cell* right_cell;
+	struct cell* up_cell;
+	struct cell* down_cell;	
+	int distance_from_start;
+	char map_symbol;
+};
+
+int can_go(struct cell* ptr, int counter)
+{
+	if (ptr == NULL)
+		// nie mozna tu isc - wskaznik nie ma wskazania na komorke mapy-
+		return 1;
+	else
+		if (ptr->map_symbol == '#')
+			// nie mozna tu isc - sciana
+			return 1;
+		else
+			if ((ptr->distance_from_start > counter) || (ptr->distance_from_start == -1))
+				// mozna tu isc - jeszcze tu nie sprawdzano
+				// (ptr->count == -1)  - komorka nie byla odwiedzona
+				// (ptr->count > counter) - komorka do ktorej chcemy isc
+				// byla odwiedzona ale ma dluzsza sciezke niz nowa droga
+				return 0;
+			else
+				// nie trzeba tu isc - bylaby dluzsza droga
+				return 1;
+}
+void go(struct cell* where, int counter)
+{
+	// zapisz ustalona aktulanie odleglosc do wizytowanej komorki
+	where->distance_from_start = counter;
+	// gdzie mozna isc
+	if (can_go(where->right_cell, counter) == 0)
+		go(where->right_cell, counter + 1);
+	if (can_go(where->down_cell, counter) == 0)
+		go(where->down_cell, counter + 1);
+	if (can_go(where->left_cell, counter) == 0)
+		go(where->left_cell, counter + 1);
+	if (can_go(where->up_cell, counter) == 0)
+		go(where->up_cell, counter + 1);
+}
+
+
+void wyszukaj_sciezke_i_wypisz(struct cell** mapa, int il_wierszy, int il_kolumn)
+{
+	int i, j;
+	for (i = 0; i < il_wierszy; i++)
+	{
+		for (j = 0; j < il_kolumn; j++)
+			printf("%c", mapa[i][j].map_symbol);
+		printf("\n");
+	}
+	printf("\n");
+
+	// przejscie po mapie i wyliczenie odleglosci
+	go(&mapa[0][0], 0);
+
+	// wypisanie odleglosci na mapie z tablicy
+	printf("Exact distance on the map:\n");
+	for (i = 0; i < il_wierszy; i++)
+	{
+		for (j = 0; j < il_kolumn; j++)
+			if (mapa[i][j].distance_from_start == -1)
+				printf(" %c ", mapa[i][j].map_symbol);
+			else
+				printf("%2i ", mapa[i][j].distance_from_start);
+		printf("\n");
+	}
+	printf("\n");
+
+	printf("Approximate distance on the map:\n");
+	for (i = 0; i < il_wierszy; i++)
+	{
+		for (j = 0; j < il_kolumn; j++)
+			if (mapa[i][j].distance_from_start == -1)
+				printf("%c", mapa[i][j].map_symbol);
+			else
+				printf("%1i", mapa[i][j].distance_from_start % 10);
+		printf("\n");
+	}
+	printf("\n");
+}
+int printing(int map_amount)
+{
+	int nr_of_rows;
+	int nr_of_columns;
+	int map_nr;
+	char fileName[100];
+	int i, j;
+	struct cell** map;
+	char buffer;
+	for (map_nr = 1; map_nr <= map_amount; map_nr++)
+	{
+		sprintf_s(fileName, 100, "test%d.txt", map_nr);
+		FILE* outputFile;
+		fopen_s(&outputFile, fileName, "rt");
+		if (outputFile == NULL)
+		{
+			printf("Couldn't open file Test%i.txt do \n", map_nr);
+		}
+		else
+		{
+			fscanf_s(outputFile, "%i\n", &nr_of_rows);
+			fscanf_s(outputFile, "%i\n", &nr_of_columns);
+
+			printf("Map from file Test%i.txt has %3i rows and %3i columns\n", map_nr, nr_of_rows, nr_of_columns);
+			printf("\n");
+
+			// alokacja dynamiczna pamieci dla tablicy dwuwymiarowej mapy
+			map = (struct cell**)malloc(nr_of_rows * sizeof(struct cell*));
+			for (i = 0; i < nr_of_rows; i++)
+				map[i] = (struct cell*)malloc(nr_of_columns * sizeof(struct cell));
+
+			for (i = 0; i < nr_of_rows; i++)
+			{
+				for (j = 0; j < nr_of_columns; j++)
+				{
+					buffer = fgetc(outputFile);
+					// znak mapy
+					map[i][j].map_symbol = buffer;
+					// wartosc na -1 oznacza ze do komorki nie mozna dojsc
+					map[i][j].distance_from_start = -1;
+					// wskaznik do komorki po lewej stronie od aktulanej komorki
+					if (j == 0)
+						// nie ma komorki po lewej stronie - pierwsza kolumna mapy
+						map[i][j].left_cell = NULL;
+					else
+						map[i][j].left_cell = &map[i][j - 1];
+					// wskaznik do komorki po prawej stronie od aktulanej komorki
+					if (j == (nr_of_columns - 1))
+						// nie ma komorki po prawej stronie - ostatnia kolumna mapy
+						map[i][j].right_cell = NULL;
+					else
+						map[i][j].right_cell = &map[i][j + 1];
+					// wskaznik do komorki powyzej aktulanej komorki
+					if (i == 0)
+						// nie ma komorki powyzej - pierszy wiersz mapy
+						map[i][j].up_cell = NULL;
+					else
+						map[i][j].up_cell = &map[i - 1][j];
+					// wskaznik do komorki ponizej aktulanej komorki
+					if (i == (nr_of_rows - 1))
+						// nie ma komorki ponizej - ostatni wiersz mapy
+						map[i][j].down_cell = NULL;
+					else
+						map[i][j].down_cell = &map[i + 1][j];
+				}
+				// odczytanie znaku konca wiersza z pliku
+				buffer = fgetc(outputFile);
+			}
+
+			fclose(outputFile);
+
+			wyszukaj_sciezke_i_wypisz(map, nr_of_rows, nr_of_columns);
+
+			
+			for (i = 0; i < nr_of_rows; i++)
+				free(map[i]);
+			free(map);
+		}
+	}
+
+	return 0;
+}
+
+
+
+
+int main()
+{
+	int z;
+	printf("Enter amount of files to process\n");
+	scanf_s("%d", &z);
+	printing(z);
+
+}
